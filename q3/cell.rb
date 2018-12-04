@@ -1,8 +1,9 @@
 class Cell
-  attr_reader :x, :y
-  def initialize(x, y)
+  attr_reader :x, :y, :id
+  def initialize(x, y, id)
     @x = x
     @y = y
+    @id = id
   end
 
   def ==(other)
