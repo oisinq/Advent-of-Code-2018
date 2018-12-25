@@ -65,4 +65,4 @@ cells.each_value do |value|
     counter += 1
   end
 end
-puts counter
+puts counter 
