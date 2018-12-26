@@ -37,6 +37,22 @@ class Grid
    @counter
   end
 
+  def best_area(limit)
+    total_area = 0
+    @grid.each_index do |x|
+      @grid[0].each_index do |y|
+        distance = 0
+        @sites.each do |site|
+          distance += manhattan(site, @grid[x][y])
+        end
+        if distance < limit
+          total_area += 1
+        end
+      end
+    end
+    total_area
+  end
+
   def find_closest(cell)
     @sites.each do |site|
       site.set_distance(manhattan(site, cell))
