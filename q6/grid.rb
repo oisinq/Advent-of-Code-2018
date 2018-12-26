@@ -22,115 +22,33 @@ class Grid
     @grid.each_index do |x|
       @grid[0].each_index do |y|
         closest_cell = find_closest(@grid[x][y])
-        #print "#{closest_cell.id},"
+        if x == 0 || y == 0 || x == @grid.length-1 || y == @grid[0].length-1
+          @counter[closest_cell] = -Float::INFINITY
+        end
+        # if closest_cell.nil?
+        #   print ".,"
+        # else
+        #   print "#{closest_cell.id},"
+        # end
         @counter[closest_cell] += 1
       end
-     # puts " "
+    # puts " "
     end
    @counter
   end
 
   def find_closest(cell)
-    closest_cell = nil
-    closest_dist = Float::INFINITY
     @sites.each do |site|
-      if manhattan(site, cell) < closest_dist
-        if manhattan(site, cell) == closest_dist
-          return nil
-        end
-        closest_dist = manhattan(site, cell)
-        closest_cell = site
-      end
+      site.set_distance(manhattan(site, cell))
     end
-    closest_cell
+    @sites.sort!
+    if @sites[0] == @sites[1]
+      return nil
+    end
+    @sites[0]
   end
-
-  # def find_closest(cell)
-  #   x = cell.x
-  #   y = cell.y
-  #   id = -1
-  #   i = 1
-  #   while true
-  #     if @grid[x-i][y].nil? && x-i >= 0
-  #       if @grid[x-i][y].id != -1
-  #         if id == -1
-  #           id = @grid[x-i][y].id
-  #         else
-  #           return -2
-  #         end
-  #       end
-  #     end
-  #     if @grid[x+i][y].nil? && x+i >= 0
-  #       if @grid[x+i][y].id != -1
-  #         if id == -1
-  #           id = @grid[x+i][y].id
-  #         else
-  #           return -2
-  #         end
-  #       end
-  #     end
-  #     if @grid[x][y-i].nil? && y-i >= 0
-  #       if @grid[x][y-i].id != -1
-  #         id = @grid[x][y-i].id
-  #       else
-  #         return -2
-  #       end
-  #     end
-  #     if @grid[x][y+i].nil? && y+i >= 0
-  #       if @grid[x][y+i].id != -1
-  #         id = @grid[x][y+i].id
-  #       else
-  #         return -2
-  #       end
-  #     end
-  #     if id != -1
-  #       return id
-  #     end
-  #     i += 1
-  #   end
-  # end
 
   def manhattan(cell1, cell2)
     (cell1.x-cell2.x).abs + (cell1.y-cell2.y).abs
   end
-  # def find_closest(cell)
-  #   id = -1
-  #   x = cell.x
-  #   y = cell.y
-  #   while id == -1
-  #     if grid[x-1][y].nil?
-  #       if grid[x-1][y].id != -1
-  #         if id == -1
-  #           id = grid[x-1][y].id
-  #         else
-  #           return -2
-  #         end
-  #       end
-  #     end
-  #     if grid[x+1][y].nil?
-  #       if grid[x+1][y].id != -1
-  #         if id == -1
-  #           id = grid[x+1][y].id
-  #         else
-  #           return -2
-  #         end
-  #       end
-  #     end
-  #     if grid[x][y-1].nil?
-  #       if grid[x][y-1].id != -1
-  #         id = grid[x][y-1].id
-  #       else
-  #         return -2
-  #       end
-  #     end
-  #     if grid[x][y+1].nil?
-  #       if grid[x][y+1].id != -1
-  #         id = grid[x][y+1].id
-  #       else
-  #         return -2
-  #       end
-  #     end
-  #   end
-  #   return id
-  # end
 end
